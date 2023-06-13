@@ -1,0 +1,41 @@
+PREFIX bio: <http://purl.org/vocab/bio/0.1/>
+PREFIX bioc: <http://ldf.fi/schema/bioc/>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <http://schema.org/>
+PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+PREFIX text: <http://jena.apache.org/text#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX : <http://ldf.fi/schema/coco/> 
+PREFIX actors: <http://ldf.fi/coco/actors/>
+PREFIX events: <http://ldf.fi/coco/events/>
+PREFIX letters: <http://ldf.fi/coco/letters/>
+PREFIX places: <http://ldf.fi/coco/places/>
+
+SELECT DISTINCT ?floit_start (sum(?writers) AS ?num_writers)
+(sum(?politicians) AS ?num_politicians) (sum(?priests) AS ?num_priests)
+  {
+  VALUES (?occupation ?writers ?politicians ?priests) {
+    ('writer'@en 1 0 0) 
+    ('politician'@en 0 1 0)
+  	('priest'@en 0 0 1)}
+  
+  ?sub a crm:E21_Person ;
+  	bioc:has_gender ?gender ;
+  	skos:prefLabel ?fullname ;
+   	:occupation/skos:prefLabel ?occupation ;
+    :flourished ?flourished.
+  
+  ?flourished crm:P82a_begin_of_the_begin ?date .
+  
+  BIND(year(?date) AS ?floit_start)
+  
+
+}  GROUPBY ?floit_start
+ ORDERBY ?floit_start
