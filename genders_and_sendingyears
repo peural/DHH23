@@ -19,9 +19,9 @@ PREFIX letters: <http://ldf.fi/coco/letters/>
 PREFIX places: <http://ldf.fi/coco/places/>
 
 SELECT ?sendername  ?sender_gender ?receivername  ?receiver_gender ?sendingYear  WHERE {
-  ?sub a crm:E21_Person ;
-  	bioc:has_gender ?gender ;
-  	skos:prefLabel ?sendername .
+  ?sub a crm:E21_Person ; #is an instance of persons
+  	bioc:has_gender ?gender ; #gender
+  	skos:prefLabel ?sendername . #name (=label)
   
   ?production 
     :was_authored_by ?sub; #this person was the sender
@@ -31,7 +31,7 @@ SELECT ?sendername  ?sender_gender ?receivername  ?receiver_gender ?sendingYear 
    
   ?letter :was_addressed_to ?receiver.
   ?timespan crm:P82a_begin_of_the_begin ?bTime .
-  BIND(year(?bTime) AS ?sendingYear)
+  BIND(year(?bTime) AS ?sendingYear) #extract only the year
   
   
   ?receiver 
