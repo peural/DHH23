@@ -1,0 +1,34 @@
+PREFIX bio: <http://purl.org/vocab/bio/0.1/>
+PREFIX bioc: <http://ldf.fi/schema/bioc/>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <http://schema.org/>
+PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+PREFIX text: <http://jena.apache.org/text#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX : <http://ldf.fi/schema/coco/> 
+PREFIX actors: <http://ldf.fi/coco/actors/>
+PREFIX events: <http://ldf.fi/coco/events/>
+PREFIX letters: <http://ldf.fi/coco/letters/>
+PREFIX places: <http://ldf.fi/coco/places/>
+
+SELECT ?sub ?receiver  WHERE {
+
+  ?production 
+    :was_authored_by ?sub; #this person was the sender
+    :letter/:was_addressed_to ?receiver. 
+ 
+  ?sub  a crm:E21_Person. #is an instance of persons
+  
+  ?receiver a crm:E21_Person. #is an instance of persons 
+   
+}
+LIMIT 1000
+
+
